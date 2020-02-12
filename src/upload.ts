@@ -71,7 +71,7 @@ export default {
           }
 
           const uploadTasks = createFileUploadTasks(drive, files, {
-            name: `${config.baseDir}/${year}/q${quarter}/${type}`,
+            name: `${config.baseDir}/${year}/Q${quarter}/${type}`,
             id: ctx.targetDir.id,
           });
 
