@@ -4,6 +4,10 @@
   "extends": ["plugin:@typescript-eslint/recommended", "airbnb"],
   "rules": {
     "camelcase": 0,
-    "@typescript-eslint/camelcase": 0
+    "@typescript-eslint/camelcase": 0,
+    "max-len": [1, {
+      "code": 150,
+      "ignoreComments": true
+    }]
   }
 }
