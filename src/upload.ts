@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import Listr from 'listr';
+import moment from 'moment';
 import { drive_v3 } from 'googleapis';
 import { CommandModule, Arguments } from 'yargs';
 import { config, findOrCreateFolder, createFileUploadTasks } from './helpers';
@@ -15,25 +16,25 @@ export default {
   builder: {
     target: {
       default: '.',
-      description: '@todo',
+      description: 'File/folder to upload',
     },
     quarter: {
       alias: 'q',
-      default: 4,
+      default: moment().quarter(),
       type: 'number',
-      description: '@todo',
+      description: 'The quarter folder (defaults to current quarter)',
     },
     year: {
       alias: 'y',
-      default: 2020,
+      default: moment().year(),
       type: 'number',
-      description: '@todo',
+      description: 'The year folder (defaults to current year)',
     },
     type: {
       alias: 't',
       type: 'string',
       default: 'received',
-      description: '@todo',
+      description: 'Type of invoice, files will ultimately placed inside this folder, should be received or sent',
     },
   },
   handler: async (argv): Promise<void> => {
