@@ -4,7 +4,6 @@ import Listr from 'listr';
 import mimeTypes from 'mime-types';
 import { drive_v3 } from 'googleapis';
 import { Credentials } from 'google-auth-library/build/src/auth/credentials';
-import conf from '../config.json';
 
 interface Config {
   clientId: string;
@@ -13,7 +12,12 @@ interface Config {
   tokens?: Credentials;
 }
 
-export const config: Config = conf as Config;
+export const getConfig = async (): Promise<Config> => {
+  const confContent = await fs.promises.readFile(path.resolve(__dirname, '../config.json'), 'utf-8');
+  const configJSON = JSON.parse(confContent) as Config;
+
+  return configJSON;
+};
 
 export const writeConfig = async (newConfig: Config): Promise<void> => {
   await fs.promises.writeFile(path.resolve(__dirname, '../config.json'), JSON.stringify(newConfig, null, 4));

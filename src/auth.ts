@@ -1,8 +1,10 @@
 import inquirer from 'inquirer';
 import { google } from 'googleapis';
-import { config, writeConfig } from './helpers';
+import { getConfig, writeConfig } from './helpers';
 
 export default async (): Promise<Record<string, unknown>> => {
+  const config = await getConfig();
+
   try {
     const oAuthClient = new google.auth.OAuth2(
       config.clientId,
