@@ -7,10 +7,16 @@
   "license": "MIT",
   "dependencies": {
     "@types/inquirer": "^6.5.0",
+    "@types/listr": "^0.14.2",
+    "@types/mime-types": "^2.1.0",
     "@types/node": "^13.7.0",
+    "@types/ora": "^3.2.0",
     "@types/yargs": "^15.0.3",
     "googleapis": "^47.0.0",
     "inquirer": "^7.0.4",
+    "listr": "^0.14.3",
+    "mime-types": "^2.1.26",
+    "ora": "^4.0.3",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5",
     "yargs": "^15.1.0"
