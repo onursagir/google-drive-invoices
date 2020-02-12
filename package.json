@@ -1,10 +1,13 @@
 {
   "name": "google-drive-invoices",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/onursagir/google-drive-invoices.git",
   "author": "Mehmet Onur Sagir <onuur.s@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "postinstall": "dist/postInstall.js"
+  },
   "dependencies": {
     "@types/inquirer": "^6.5.0",
     "@types/listr": "^0.14.2",
