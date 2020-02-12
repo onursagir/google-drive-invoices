@@ -61,15 +61,19 @@ export default {
           const targetPath = path.resolve(target as string);
           const targetStat = await fs.promises.stat(targetPath);
 
-          let uploadTasks: Listr.ListrTask[] = [];
-          if (targetStat.isFile()) {
-            uploadTasks = createFileUploadTasks(drive, [targetPath], ctx.targetDir.id);
-          } else if (targetStat.isDirectory()) {
-            const files = (await fs.promises.readdir(targetPath))
-              .map((file) => path.resolve(targetPath, file));
+          let files: string[] = [];
 
-            uploadTasks = createFileUploadTasks(drive, files, ctx.targetDir.id);
+          if (targetStat.isFile()) {
+            files = [targetPath];
+          } else if (targetStat.isDirectory()) {
+            files = (await fs.promises.readdir(targetPath))
+              .map((file) => path.resolve(targetPath, file));
           }
+
+          const uploadTasks = createFileUploadTasks(drive, files, {
+            name: `${config.baseDir}/${year}/q${quarter}/${type}`,
+            id: ctx.targetDir.id,
+          });
 
           return new Listr(uploadTasks, { concurrent: true });
         },
