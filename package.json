@@ -1,0 +1,42 @@
+{
+  "name": "google-drive-invoices",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "repository": "https://github.com/onursagir/google-drive-invoices.git",
+  "author": "Mehmet Onur Sagir <onuur.s@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "dist/postInstall.js"
+  },
+  "dependencies": {
+    "@types/inquirer": "^6.5.0",
+    "@types/listr": "^0.14.2",
+    "@types/mime-types": "^2.1.0",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^13.7.0",
+    "@types/ora": "^3.2.0",
+    "@types/yargs": "^15.0.3",
+    "googleapis": "^47.0.0",
+    "inquirer": "^7.0.4",
+    "listr": "^0.14.3",
+    "mime-types": "^2.1.26",
+    "moment": "^2.24.0",
+    "ora": "^4.0.3",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5",
+    "yargs": "^15.1.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.19.2",
+    "@typescript-eslint/parser": "^2.19.2",
+    "eslint": "6.1.0",
+    "eslint-config-airbnb": "18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0"
+  },
+  "bin": {
+    "invoices": "./dist/index.js"
+  }
+}
