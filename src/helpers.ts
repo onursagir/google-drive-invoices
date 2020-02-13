@@ -50,24 +50,3 @@ export const findOrCreateFolder: FindOrCreateFolder = async (drive, pathName) =>
 
   return baseDir;
 };
-
-
-interface CreateFileUploadTasks {
-  (drive: drive_v3.Drive, files: string[], targetDir: { name: string; id: string }): Listr.ListrTask[];
-}
-
-export const createFileUploadTasks: CreateFileUploadTasks = (drive, files, targetDir) => files.map((file) => ({
-  title: `${file} → ${targetDir.name}`,
-  task: async (): Promise<void> => {
-    await drive.files.create({
-      requestBody: {
-        name: path.basename(file),
-        parents: [targetDir.id],
-      },
-      media: {
-        mimeType: mimeTypes.lookup(file) as string,
-        body: fs.createReadStream(file),
-      },
-    });
-  },
-}));

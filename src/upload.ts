@@ -2,9 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import Listr from 'listr';
 import moment from 'moment';
+import mimeTypes from 'mime-types';
 import { drive_v3 } from 'googleapis';
 import { CommandModule, Arguments } from 'yargs';
-import { getConfig, findOrCreateFolder, createFileUploadTasks } from './helpers';
+import { getConfig, findOrCreateFolder } from './helpers';
 
 interface Argv extends Arguments {
   drive: drive_v3.Drive;
@@ -63,19 +64,45 @@ export default {
           const targetPath = path.resolve(target as string);
           const targetStat = await fs.promises.stat(targetPath);
 
-          let files: string[] = [];
+          let files: Partial<fs.Dirent>[] = [];
 
           if (targetStat.isFile()) {
-            files = [targetPath];
+            files = [{ name: targetPath }];
           } else if (targetStat.isDirectory()) {
-            files = (await fs.promises.readdir(targetPath))
-              .map((file) => path.resolve(targetPath, file));
+            files = (await fs.promises.readdir(targetPath, { withFileTypes: true }));
           }
 
-          const uploadTasks = createFileUploadTasks(drive, files, {
-            name: `${config.baseDir}/${year}/Q${quarter}/${type}`,
-            id: ctx.targetDir.id,
-          });
+
+          const targetDirName = `${config.baseDir}/${year}/Q${quarter}/${type}`;
+          const longestFileNameLength = Math.max(...files.map((file) => {
+            const filePath = path.resolve(process.cwd(), targetPath, file.name as string);
+
+            return `${filePath} → ${targetDirName}`.length;
+          }));
+
+          const uploadTasks = files.reduce<Listr.ListrTask[]>((acc, file) => {
+            const filePath = path.resolve(process.cwd(), targetPath, file.name as string);
+
+            if (file.isDirectory && file.isDirectory()) return acc;
+
+            return [
+              ...acc,
+              {
+                title: `${filePath} ${`→ ${targetDirName}`.padStart(longestFileNameLength - filePath.length, ' ')}`,
+                task: async (): Promise<void> => {
+                  await drive.files.create({
+                    requestBody: {
+                      name: path.basename(filePath),
+                      parents: [ctx.targetDir.id],
+                    },
+                    media: {
+                      mimeType: mimeTypes.lookup(filePath) as string,
+                      body: fs.createReadStream(filePath),
+                    },
+                  });
+                },
+              }];
+          }, []);
 
           return new Listr(uploadTasks, { concurrent: true });
         },
