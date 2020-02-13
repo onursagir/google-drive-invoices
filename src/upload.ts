@@ -76,7 +76,6 @@ export default {
           const targetDirName = `${config.baseDir}/${year}/Q${quarter}/${type}`;
           const longestFileNameLength = Math.max(...files.map((file) => {
             const filePath = path.resolve(process.cwd(), targetPath, file.name as string);
-
             return `${filePath} → ${targetDirName}`.length;
           }));
 
