@@ -6,6 +6,7 @@ import mimeTypes from 'mime-types';
 import { drive_v3 } from 'googleapis';
 import { CommandModule, Arguments } from 'yargs';
 import { getConfig, findOrCreateFolder } from './helpers';
+import { getConfig, findOrCreateFolder, authorize } from './helpers';
 
 interface Argv extends Arguments {
   drive: drive_v3.Drive;
@@ -40,6 +41,7 @@ export default {
   },
   handler: async (argv): Promise<void> => {
     const config = await getConfig();
+    const { drive } = await authorize();
     const {
       drive, quarter, year, type, target,
     } = argv as Argv;
