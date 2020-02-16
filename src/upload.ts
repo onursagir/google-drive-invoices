@@ -3,9 +3,9 @@ import path from 'path';
 import Listr from 'listr';
 import moment from 'moment';
 import mimeTypes from 'mime-types';
+import isDotFile from 'is-dotfile';
 import { drive_v3 } from 'googleapis';
 import { CommandModule, Arguments } from 'yargs';
-import { getConfig, findOrCreateFolder } from './helpers';
 import { getConfig, findOrCreateFolder, authorize } from './helpers';
 
 interface Argv extends Arguments {
@@ -43,7 +43,7 @@ export default {
     const config = await getConfig();
     const { drive } = await authorize();
     const {
-      drive, quarter, year, type, target,
+      quarter, year, type, target,
     } = argv as Argv;
 
     if (!config.baseDir) throw new Error('Base directory is not set');
@@ -66,7 +66,7 @@ export default {
           const targetPath = path.resolve(target as string);
           const targetStat = await fs.promises.stat(targetPath);
 
-          let files: Partial<fs.Dirent>[] = [];
+          let files: (Omit<Partial<fs.Dirent>, 'name'> & {name: string})[] = [];
 
           if (targetStat.isFile()) {
             files = [{ name: targetPath }];
@@ -85,6 +85,8 @@ export default {
             const filePath = path.resolve(process.cwd(), targetPath, file.name as string);
 
             if (file.isDirectory && file.isDirectory()) return acc;
+
+            if (isDotFile(file.name)) return acc;
 
             return [
               ...acc,

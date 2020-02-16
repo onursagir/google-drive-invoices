@@ -50,6 +50,11 @@
     "@types/through" "*"
     rxjs "^6.4.0"
 
+"@types/is-dotfile@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/is-dotfile/-/is-dotfile-2.0.0.tgz#21203694d215e3983c114f3c1ae944729dbea4e4"
+  integrity sha512-zE0cTxb6OibSfX8VtH1MMRl3jHE5sYte9nRHc8hBWpHfFAON8u6JRv4KrZT+paiEiEcxA51mylzOTJ0sgQEyQA==
+
 "@types/json-schema@^7.0.3":
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.4.tgz#38fd73ddfd9b55abb1e1b2ed578cb55bd7b7d339"
@@ -551,6 +556,11 @@ doctrine@^3.0.0:
   integrity sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==
   dependencies:
     esutils "^2.0.2"
+
+dotfile-regex@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/dotfile-regex/-/dotfile-regex-0.1.2.tgz#257d0c9a506878ffa6379614c5a92e2426492d95"
+  integrity sha1-JX0MmlBoeP+mN5YUxakuJCZJLZU=
 
 ecdsa-sig-formatter@1.0.11:
   version "1.0.11"
@@ -1163,6 +1173,13 @@ is-date-object@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/is-date-object/-/is-date-object-1.0.2.tgz#bda736f2cd8fd06d32844e7743bfa7494c3bfd7e"
   integrity sha512-USlDT524woQ08aoZFzh3/Z6ch9Y/EWXEHQ/AaRN0SkKq4t2Jw2R2339tSXmwuVoY7LLlBCbOIlx2myP/L5zk0g==
+
+is-dotfile@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/is-dotfile/-/is-dotfile-2.0.0.tgz#4fc252eaaf52c8f3583a796bffaaecc95b2a4ca4"
+  integrity sha1-T8JS6q9SyPNYOnlr/6rsyVsqTKQ=
+  dependencies:
+    dotfile-regex "^0.1.2"
 
 is-extglob@^2.1.1:
   version "2.1.1"
