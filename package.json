@@ -1,6 +1,6 @@
 {
   "name": "google-drive-invoices",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "dist/index.js",
   "repository": "https://github.com/onursagir/google-drive-invoices.git",
   "author": "Mehmet Onur Sagir <onuur.s@gmail.com>",
